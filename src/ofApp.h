@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxRpiLED.h"
 
 class ofApp : public ofBaseApp{
 	public:
@@ -24,8 +25,12 @@ class ofApp : public ofBaseApp{
         int camWidth;
         int camHeight;
         ofPixels pixels;
+	ofPixels ledPixels;
     
         bool screenShotOnce;
         ofImage screenImage;
 	ofImage cameraImage;
+	ofImage ledImage;
+
+	ofxRpiLED led;
 };

@@ -6,6 +6,10 @@ void ofApp::setup(){
     
     camWidth = 1280;  // try to grab at this size.
     camHeight = 720;
+
+    // ledPixels.resize(64, 32, OF_INTERPOLATE_NEAREST_NEIGHBOR);
+    ledPixels.allocate(64, 32, OF_IMAGE_COLOR);
+    ledImage.allocate(64, 32, OF_IMAGE_COLOR);
     
     //get back a list of devices.
     vector<ofVideoDevice> devices = vidGrabber.listDevices();
@@ -21,7 +25,7 @@ void ofApp::setup(){
     }
     
     vidGrabber.setDeviceID(0);
-    vidGrabber.setDesiredFrameRate(60);
+    vidGrabber.setDesiredFrameRate(30);
     vidGrabber.initGrabber(camWidth, camHeight);
     vidGrabber.setup(camWidth, camHeight);
 
@@ -39,19 +43,18 @@ void ofApp::update(){
     if(vidGrabber.isFrameNew()){
 	// ofLog(OF_LOG_NOTICE, "IIZUKAK: NEW FRAME");
         pixels = vidGrabber.getPixels();
+	pixels.resizeTo(ledPixels, OF_INTERPOLATE_NEAREST_NEIGHBOR);
     }
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	/*
     for (int i = 0; i < 64; i++){
         for (int j = 0; j < 64; j++) {
             ofSetColor(pixels.getColor(i * 10, j * 10));
             ofDrawCircle(i * 10 + 5, j * 10 + 5, 4);
         }
     }
-    */
     
     // テスト用に初回だけスクリーンショットを取得する
     if (screenShotOnce) {
@@ -59,6 +62,10 @@ void ofApp::draw(){
 	ofLog(OF_LOG_NOTICE, "IIZUKAK: CAMERA IMAGE SAVE");
 	cameraImage.setFromPixels(pixels);
         cameraImage.save("cameraimage.png");
+
+	ofLog(OF_LOG_NOTICE, "IIZUKAK: LED IMAGE SAVE");
+	ledImage.setFromPixels(ledPixels);
+        ledImage.save("ledimage.png");
 
 	ofLog(OF_LOG_NOTICE, "IIZUKAK: SCREEN SHOT TAKE");
         screenImage.grabScreen(0, 0 , ofGetWidth(), ofGetHeight());
