@@ -23,12 +23,12 @@ void ofApp::setup(){
     vidGrabber.setDeviceID(0);
     vidGrabber.setDesiredFrameRate(60);
     vidGrabber.initGrabber(camWidth, camHeight);
+    vidGrabber.setup(camWidth, camHeight);
 
     ofSetVerticalSync(true);
     
     // WebCam のセットアップを待つ
     ofSleepMillis(4000);
-
 }
 
 //--------------------------------------------------------------
@@ -37,18 +37,21 @@ void ofApp::update(){
     ofBackground(0);
     vidGrabber.update();
     if(vidGrabber.isFrameNew()){
+	// ofLog(OF_LOG_NOTICE, "IIZUKAK: NEW FRAME");
         pixels = vidGrabber.getPixels();
     }
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+	/*
     for (int i = 0; i < 64; i++){
         for (int j = 0; j < 64; j++) {
             ofSetColor(pixels.getColor(i * 10, j * 10));
             ofDrawCircle(i * 10 + 5, j * 10 + 5, 4);
         }
     }
+    */
     
     // テスト用に初回だけスクリーンショットを取得する
     if (screenShotOnce) {
