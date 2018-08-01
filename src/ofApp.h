@@ -21,16 +21,16 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-        ofVideoGrabber vidGrabber;
-        int camWidth;
-        int camHeight;
-        ofPixels pixels;
-	ofPixels ledPixels;
-    
-        bool screenShotOnce;
-        ofImage screenImage;
-	ofImage cameraImage;
-	ofImage ledImage;
+		ofVideoGrabber vidGrabber;
+		int camWidth;
+		int camHeight;
+		ofPixels pixels;
+		ofPixels ledPixels;
+	    
+		bool screenShotOnce;
+		ofImage screenImage;
+		ofImage cameraImage;
+		ofImage ledImage;
 
-	ofxRpiLED led;
+		ofxRpiLED led;
 };

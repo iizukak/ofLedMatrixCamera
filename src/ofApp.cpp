@@ -44,6 +44,7 @@ void ofApp::update(){
 	// ofLog(OF_LOG_NOTICE, "IIZUKAK: NEW FRAME");
         pixels = vidGrabber.getPixels();
 	pixels.resizeTo(ledPixels, OF_INTERPOLATE_NEAREST_NEIGHBOR);
+	ledImage.setFromPixels(ledPixels);
     }
 }
 
@@ -55,7 +56,7 @@ void ofApp::draw(){
             ofDrawCircle(i * 10 + 5, j * 10 + 5, 4);
         }
     }
-    
+
     // テスト用に初回だけスクリーンショットを取得する
     if (screenShotOnce) {
 	// WebCam のテスト用画像を生成
@@ -64,14 +65,18 @@ void ofApp::draw(){
         cameraImage.save("cameraimage.png");
 
 	ofLog(OF_LOG_NOTICE, "IIZUKAK: LED IMAGE SAVE");
-	ledImage.setFromPixels(ledPixels);
         ledImage.save("ledimage.png");
 
 	ofLog(OF_LOG_NOTICE, "IIZUKAK: SCREEN SHOT TAKE");
         screenImage.grabScreen(0, 0 , ofGetWidth(), ofGetHeight());
         screenImage.save("screenshot.png");
         screenShotOnce = false;
+
+	ofLog(OF_LOG_NOTICE, "IIZUKAK: w:%f, h:%f", ledImage.getWidth(), ledImage.getHeight());
+    	led.draw(ledImage);
     }
+
+    // led.draw(ledImage);
 }
 
 //--------------------------------------------------------------
