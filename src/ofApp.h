@@ -24,4 +24,7 @@ class ofApp : public ofBaseApp{
         int camWidth;
         int camHeight;
         ofPixels pixels;
+    
+        bool screenShotOnce;
+        ofImage screenImage;
 };

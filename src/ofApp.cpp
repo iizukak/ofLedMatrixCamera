@@ -2,6 +2,8 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    screenShotOnce = true;
+    
     camWidth = 1280;  // try to grab at this size.
     camHeight = 720;
     
@@ -23,6 +25,9 @@ void ofApp::setup(){
     vidGrabber.initGrabber(camWidth, camHeight);
 
     ofSetVerticalSync(true);
+    
+    // WebCam のセットアップを待つ
+    ofSleepMillis(1000);
 }
 
 //--------------------------------------------------------------
@@ -39,9 +44,16 @@ void ofApp::update(){
 void ofApp::draw(){
     for (int i = 0; i < 64; i++){
         for (int j = 0; j < 64; j++) {
-            ofSetColor(pixels.getColor(i * 10 + 500, j * 10));
+            ofSetColor(pixels.getColor(i * 10, j * 10));
             ofDrawCircle(i * 10 + 5, j * 10 + 5, 4);
         }
+    }
+    
+    // テスト用に初回だけスクリーンショットを取得する
+    if (screenShotOnce) {
+        screenImage.grabScreen(0, 0 , ofGetWidth(), ofGetHeight());
+        screenImage.save("screenshot.png");
+        screenShotOnce = false;
     }
 }
 
