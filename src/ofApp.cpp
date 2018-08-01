@@ -13,7 +13,7 @@ void ofApp::setup(){
     for(size_t i = 0; i < devices.size(); i++){
         if(devices[i].bAvailable){
             //log the device
-            ofLogNotice() << devices[i].id << ": " << devices[i].deviceName;
+            ofLogNotice() << devices[i].id << ": " << devices[i].deviceName << " - available";
         }else{
             //log the device and note it as unavailable
             ofLogNotice() << devices[i].id << ": " << devices[i].deviceName << " - unavailable ";
@@ -21,13 +21,14 @@ void ofApp::setup(){
     }
     
     vidGrabber.setDeviceID(0);
-    vidGrabber.setDesiredFrameRate(30);
+    vidGrabber.setDesiredFrameRate(60);
     vidGrabber.initGrabber(camWidth, camHeight);
 
     ofSetVerticalSync(true);
     
     // WebCam のセットアップを待つ
-    ofSleepMillis(1000);
+    ofSleepMillis(4000);
+
 }
 
 //--------------------------------------------------------------
@@ -51,6 +52,12 @@ void ofApp::draw(){
     
     // テスト用に初回だけスクリーンショットを取得する
     if (screenShotOnce) {
+	// WebCam のテスト用画像を生成
+	ofLog(OF_LOG_NOTICE, "IIZUKAK: CAMERA IMAGE SAVE");
+	cameraImage.setFromPixels(pixels);
+        cameraImage.save("cameraimage.png");
+
+	ofLog(OF_LOG_NOTICE, "IIZUKAK: SCREEN SHOT TAKE");
         screenImage.grabScreen(0, 0 , ofGetWidth(), ofGetHeight());
         screenImage.save("screenshot.png");
         screenShotOnce = false;

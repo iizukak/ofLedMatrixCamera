@@ -27,4 +27,5 @@ class ofApp : public ofBaseApp{
     
         bool screenShotOnce;
         ofImage screenImage;
+	ofImage cameraImage;
 };
