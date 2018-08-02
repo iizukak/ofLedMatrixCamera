@@ -11,8 +11,8 @@ void ofApp::setup(){
     led.setup();
 
     // ledPixels.resize(64, 32, OF_INTERPOLATE_NEAREST_NEIGHBOR);
-    ledPixels.allocate(64, 32, OF_IMAGE_COLOR);
-    ledImage.allocate(64, 32, OF_IMAGE_COLOR);
+    ledPixels.allocate(64, 64, OF_IMAGE_COLOR);
+    ledImage.allocate(64, 64, OF_IMAGE_COLOR);
     
     //get back a list of devices.
     vector<ofVideoDevice> devices = vidGrabber.listDevices();
