@@ -4,8 +4,11 @@
 void ofApp::setup(){
     screenShotOnce = true;
     
-    camWidth = 1280;  // try to grab at this size.
-    camHeight = 720;
+    camWidth = 320;  // try to grab at this size.
+    camHeight = 240;
+
+    // LED マトリクスライブラリを初期化
+    led.setup();
 
     // ledPixels.resize(64, 32, OF_INTERPOLATE_NEAREST_NEIGHBOR);
     ledPixels.allocate(64, 32, OF_IMAGE_COLOR);
@@ -25,14 +28,15 @@ void ofApp::setup(){
     }
     
     vidGrabber.setDeviceID(0);
-    vidGrabber.setDesiredFrameRate(30);
+    vidGrabber.setDesiredFrameRate(60);
     vidGrabber.initGrabber(camWidth, camHeight);
-    vidGrabber.setup(camWidth, camHeight);
+
+    // vidGrabber.setup(camWidth, camHeight);
 
     ofSetVerticalSync(true);
     
     // WebCam のセットアップを待つ
-    ofSleepMillis(4000);
+    ofSleepMillis(20000);
 }
 
 //--------------------------------------------------------------
@@ -46,16 +50,20 @@ void ofApp::update(){
 	pixels.resizeTo(ledPixels, OF_INTERPOLATE_NEAREST_NEIGHBOR);
 	ledImage.setFromPixels(ledPixels);
     }
+
+    ofSleepMillis(100);
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    /*
     for (int i = 0; i < 64; i++){
         for (int j = 0; j < 64; j++) {
             ofSetColor(pixels.getColor(i * 10, j * 10));
             ofDrawCircle(i * 10 + 5, j * 10 + 5, 4);
         }
     }
+    */
 
     // テスト用に初回だけスクリーンショットを取得する
     if (screenShotOnce) {
@@ -73,10 +81,10 @@ void ofApp::draw(){
         screenShotOnce = false;
 
 	ofLog(OF_LOG_NOTICE, "IIZUKAK: w:%f, h:%f", ledImage.getWidth(), ledImage.getHeight());
-    	led.draw(ledImage);
+    	// led.draw(ledImage);
     }
 
-    // led.draw(ledImage);
+    led.draw(ledImage);
 }
 
 //--------------------------------------------------------------
