@@ -2,13 +2,15 @@
 
 Raspberry Pi + openFrameworks + LED マトリクス + Web カメラの実験プロジェクト
 
+![demo](demo/demo.jpg)
+
 ## What's This
 
 Raspberry Pi で、Web カメラからの入力を受け取って LED マトリクスパネルにリアルタイムで表示する装置です。実装は C++ で、openFrameworks をライブラリとして利用しています。
 
 ## Demo
 
-こちらの youtube を御覧ください。
+こちらの [youtube](https://youtu.be/S7y5ue7JHUk) を御覧ください。
 
 ## 必要な機材
 
