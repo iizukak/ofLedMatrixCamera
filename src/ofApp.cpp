@@ -10,7 +10,6 @@ void ofApp::setup(){
     // LED マトリクスライブラリを初期化
     led.setup();
 
-    // ledPixels.resize(64, 32, OF_INTERPOLATE_NEAREST_NEIGHBOR);
     ledPixels.allocate(64, 64, OF_IMAGE_COLOR);
     ledImage.allocate(64, 64, OF_IMAGE_COLOR);
     
@@ -31,8 +30,6 @@ void ofApp::setup(){
     vidGrabber.setDesiredFrameRate(60);
     vidGrabber.initGrabber(camWidth, camHeight);
 
-    // vidGrabber.setup(camWidth, camHeight);
-
     ofSetVerticalSync(true);
     
     // WebCam のセットアップを待つ
@@ -41,13 +38,18 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    // ofBackground(100, 100, 100);
     ofBackground(0);
     vidGrabber.update();
     if(vidGrabber.isFrameNew()){
-	// ofLog(OF_LOG_NOTICE, "IIZUKAK: NEW FRAME");
         pixels = vidGrabber.getPixels();
-	pixels.resizeTo(ledPixels, OF_INTERPOLATE_NEAREST_NEIGHBOR);
+	ofColor c;
+	for (int i = 0; i < 64; i++){
+	    for (int j = 0; j < 64; j++) {
+		c = pixels.getColor(i * 3 + 64, j * 3 + 24);
+		ledPixels.setColor(63 - i, j, c);
+	    }
+	}
+	
 	ledImage.setFromPixels(ledPixels);
     }
 
@@ -56,32 +58,17 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    /*
-    for (int i = 0; i < 64; i++){
-        for (int j = 0; j < 64; j++) {
-            ofSetColor(pixels.getColor(i * 10, j * 10));
-            ofDrawCircle(i * 10 + 5, j * 10 + 5, 4);
-        }
-    }
-    */
-
     // テスト用に初回だけスクリーンショットを取得する
     if (screenShotOnce) {
+        screenShotOnce = false;
+
 	// WebCam のテスト用画像を生成
-	ofLog(OF_LOG_NOTICE, "IIZUKAK: CAMERA IMAGE SAVE");
+	ofLog(OF_LOG_NOTICE, "CAMERA IMAGE SAVE");
 	cameraImage.setFromPixels(pixels);
         cameraImage.save("cameraimage.png");
 
-	ofLog(OF_LOG_NOTICE, "IIZUKAK: LED IMAGE SAVE");
+	ofLog(OF_LOG_NOTICE, "LED IMAGE SAVE");
         ledImage.save("ledimage.png");
-
-	ofLog(OF_LOG_NOTICE, "IIZUKAK: SCREEN SHOT TAKE");
-        screenImage.grabScreen(0, 0 , ofGetWidth(), ofGetHeight());
-        screenImage.save("screenshot.png");
-        screenShotOnce = false;
-
-	ofLog(OF_LOG_NOTICE, "IIZUKAK: w:%f, h:%f", ledImage.getWidth(), ledImage.getHeight());
-    	// led.draw(ledImage);
     }
 
     led.draw(ledImage);
